@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+    <py-config>
+        [[fetch]]
+        files = ["./static/Box.py", "./static/Board.py"]  
+    </py-config>
+</head>
+<body>
+    <div>
+        <span id="gameHead">
+            Time: 00:00, Moves: 0
+        </span><br/>
+        <canvas width="500" height="500" id="platno"></canvas>
+    </div>
+    <py-script src="./static/game.py" />
+</body>
+</html>
