@@ -7,11 +7,16 @@ class Box:
 
     def drawSelf(self, x: int, y: int, boxSize: int, ctx):
         ctx.beginPath()
-        ctx.strokeWidth = "3"
-        ctx.rect(boxSize*x, boxSize*y, boxSize, boxSize)
+        ctx.fillStyle = "#083b8c"
+        ctx.fillRect(boxSize*x, boxSize*y, boxSize, boxSize)
         ctx.closePath()
-        ctx.stroke()
         if self._value != 0:
+            ctx.beginPath()
+            ctx.fillStyle = "#165dcc"
+            ctx.roundRect(boxSize*x+boxSize//8, boxSize*y+boxSize//8, 3*boxSize//4, 3*boxSize//4, 3)
+            ctx.closePath()
+            ctx.fill()
+            ctx.fillStyle = "#FFFFFF"
             ctx.font = "20px Arial"
             ctx.textAlign = "center"
             ctx.textBaseline = "middle"

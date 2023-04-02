@@ -1,0 +1,29 @@
+html, body {
+    margin: 0;
+    padding: 0;
+}
+canvas {
+    cursor: pointer;
+}
+
+.mainPage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3px;
+    user-select: none;
+}
+
+.navigatorPage {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+    margin-bottom: 10px;
+    background-color: rgb(70, 70, 70);
+}
+.navigatorPage a {
+    padding-right: 10px;
+}
