@@ -4,50 +4,39 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
-    <link rel="stylesheet" href="./static/style.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
-    <py-config>
-        [[fetch]]
-        files = ["./static/Box.py", "./static/Board.py"]  
-    </py-config>
+    <link rel="stylesheet" href="/static/style.css">
+    <title>Shift puzzle</title>
 </head>
 <body>
-    <div class="navigatorPage shadow">
-        <img src="./static/logo.svg" alt="logo" width="50" height="50">
-        <nav>
-            <a href="" class="icon-link icon-link-hover">
-                Home
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
-                    <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5ZM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5 5 5Z"/>
-                  </svg>                  
-            </a>
-            <a href="" class="icon-link icon-link-hover">
-                Profile
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
-                  <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z"/>
-                </svg>
-            </a>
-            <a href="" class="icon-link icon-link-hover">
-                Log Out
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z"/>
-                    <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"/>
-                  </svg>
-                  
-            </a>
-        </nav>
+    <div id="wave-2"></div>
+    <div id="menu">
+        <p class="display-2">
+            <svg viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="40" height="40" x="50" y="100" fill-opacity="0" stroke-width="3" stroke="#FFFFFF" />
+                    <rect width="40" height="40" x="50" y="50" fill-opacity="0" stroke-width="3" stroke="#FFFFFF" />
+                    <rect width="40" height="40" x="100" y="50" fill-opacity="0" stroke-width="3" stroke="#FFFFFF" />
+            </svg>
+            Shift Puzzle
+        </p>
+        <form class="row g-3">
+            <div class="col-auto">
+                <select required class="form-select" aria-label="Game size selection" id="size">
+                    <option selected disabled value="4">Select board size</option>
+                    <option value="3">3x3</option>
+                    <option value="4">4x4</option>
+                    <option value="5">5x5</option>
+                    <option value="6">6x6</option>
+                    <option value="7">7x7</option>
+                </select>
+            </div>      
+            <div class="col-auto">
+                <button type="button" class="btn btn-primary" onclick="window.location.href='/game/'+document.getElementById('size').value">New Game</button>    
+            </div>    
+        </form>
     </div>
-    <div class="mainPage">
-        <h1 class="display-4" id="gameHead">
-            Time: 00:00, Moves: 0
-        </h1><br/>
-        <div>
-            <canvas id="platno"></canvas>
-        </div>
-    </div>
-    <py-script src="./static/game.py" />
+    <div id="wave"></div>
 </body>
 </html>

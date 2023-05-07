@@ -5,12 +5,12 @@ class Box:
         else:
             self._value = value 
 
-    def drawSelf(self, x: int, y: int, boxSize: int, ctx):
+    def drawSelf(self, x: int, y: int, boxSize: int, ctx, isLast: bool = False):
         ctx.beginPath()
         ctx.fillStyle = "#083b8c"
         ctx.fillRect(boxSize*x, boxSize*y, boxSize, boxSize)
         ctx.closePath()
-        if self._value != 0:
+        if not isLast:
             ctx.beginPath()
             ctx.fillStyle = "#165dcc"
             ctx.roundRect(boxSize*x+boxSize//8, boxSize*y+boxSize//8, 3*boxSize//4, 3*boxSize//4, 3)
@@ -31,4 +31,3 @@ class Box:
             raise ValueError("Box value has to be a nonnegative integer.")
         else:
             self._value = value 
-    

@@ -1,15 +1,19 @@
 from js import (
     document,
     console,
-    window
+    window,
+    bootstrap
     )
-from static.Board import Board
 from pyodide.ffi.wrappers import add_event_listener
+from pyodide.ffi.wrappers import remove_event_listener
 import asyncio
 
+boardSize = int(window.location.pathname.split("/").pop())
+console.log(boardSize)
 canvas = document.getElementById("platno")
 ctx = canvas.getContext("2d")
-board = Board()
+screen = document.getElementById("gameOver")
+board = Board(boardSize)
 gameData = {
     "moves": 0,
     "time": 0,
@@ -21,6 +25,13 @@ def gameStart():
     board.shuffleSelf()
     board.drawSelf(canvas)
 
+def gameStop():
+    global gameData
+    gameData['gameEnd'] = True
+    remove_event_listener(canvas, 'click', canvasClickListener)
+    screen.style.visibility = 'visible'
+    message=f"<i class='bi bi-trophy-fill'></i><br/>You have won.<br/> Final time: {gameData['time'] // 60:02d}:{gameData['time']%60:02d}<br/> # of moves: {gameData['moves']}<a href='/'>Main menu.</a>"
+    screen.innerHTML = message
 def canvasClickListener(evt):
     rect = canvas.getBoundingClientRect()
     doRedraw = board.clickHandler(evt.clientX -rect.left, evt.clientY- rect.top, canvas)
@@ -28,8 +39,9 @@ def canvasClickListener(evt):
         board.drawSelf(canvas)
         global gameData
         gameData["moves"] += 1
-        output = f"Time: {gameData['time']// 60:02d}:{gameData['time']%60:02d}, Moves: {gameData['moves']}"
+        output = f"Time: {gameData['time'] // 60:02d}:{gameData['time']%60:02d}, Moves: {gameData['moves']}"
         document.getElementById("gameHead").innerHTML = output
+        if board.isInWonState(): gameStop()
 
 def resizeCanvas(evt = None):
     if window.innerWidth > 1000:
@@ -44,10 +56,10 @@ def resizeCanvas(evt = None):
 async def timer():
     global gameData
     while not gameData['gameEnd']:
-        await asyncio.sleep(1)
         gameData["time"] += 1
         output = f"Time: {gameData['time']// 60:02d}:{gameData['time']%60:02d}, Moves: {gameData['moves']}"
         document.getElementById("gameHead").innerHTML = output
+        await asyncio.sleep(1)
 
 gameStart()
 add_event_listener(

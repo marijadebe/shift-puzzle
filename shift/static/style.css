@@ -5,6 +5,54 @@ html, body {
 canvas {
     cursor: pointer;
 }
+#wave {
+    position: fixed;
+    bottom:0;
+    height:30%;
+    width:100%;
+    background-image: url('/static/wave.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+#wave-2{
+    position: fixed;
+    width: 100%;
+    height: 30%;
+    top: 0;
+    background-image: url('/static/wave2.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+#menu {
+    position: absolute;
+    top:30%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: 10px;
+}
+p svg {
+    width: 1.4em;
+    vertical-align: text-top;
+}
+
+#gameOver {
+    visibility: hidden;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    top: 0; 
+    left: 0; 
+    opacity: 1.0;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
 
 .mainPage {
     display: flex;
