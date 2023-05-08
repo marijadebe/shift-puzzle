@@ -1,13 +1,13 @@
 from js import (
     document,
     console,
-    window,
-    bootstrap
-    )
+    window
+)
 from pyodide.ffi.wrappers import add_event_listener
 from pyodide.ffi.wrappers import remove_event_listener
 import asyncio
 
+"""Metadata hry"""
 boardSize = int(window.location.pathname.split("/").pop())
 console.log(boardSize)
 canvas = document.getElementById("platno")
@@ -21,6 +21,7 @@ gameData = {
 }
 
 def gameStart():
+    """Procedura volana po nacteni okna."""
     resizeCanvas()
     board.shuffleSelf()
     board.drawSelf(canvas)
@@ -35,6 +36,7 @@ def gameStop():
     screen.innerHTML = message
 
 def reDraw():
+    """Prekresli metadata a hraci plochu po provedeni tahu"""
     board.drawSelf(canvas)
     global gameData
     gameData["moves"] += 1
@@ -43,10 +45,20 @@ def reDraw():
     if board.isInWonState(): gameStop()
 
 def canvasClickListener(evt):
+    """Zachyceni kliknuti na hraci plochu.
+
+    Args:
+        evt (Object): Event data.
+    """
     rect = canvas.getBoundingClientRect()
     doRedraw = board.clickHandler(evt.clientX -rect.left, evt.clientY- rect.top, canvas)
     if doRedraw: reDraw()    
 def windowKeyListener(evt):
+    """Zachyceni klaves pri fokusovani okna.
+
+    Args:
+        evt (Object): Event data.
+    """
     doRedraw = False
     match evt.key:
         case "ArrowLeft": doRedraw = board.keyHandler(1,0,canvas)
@@ -56,6 +68,11 @@ def windowKeyListener(evt):
     if doRedraw: reDraw()
 
 def resizeCanvas(evt = None):
+    """Zachyceni zmeny velikosti okna. Zajistuje jistou responsivnost platna.
+
+    Args:
+        evt (Object, optional): Event data. Defaultne None.
+    """
     if window.innerWidth > 1000:
         canvas.width = window.innerWidth//4
         canvas.height = window.innerWidth//4
@@ -66,6 +83,8 @@ def resizeCanvas(evt = None):
     board.drawSelf(canvas)
 
 async def timer():
+    """Pocitadlo neustale ozivovane event loopem (simulace samostatneho vlakna).
+    """
     global gameData
     while not gameData['gameEnd']:
         gameData["time"] += 1

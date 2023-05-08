@@ -8,6 +8,11 @@ class Board:
         self._gameState = [[Box(1+i+j*boardSize) for j in range(boardSize)] for i in range(boardSize)]
 
     def drawSelf(self, canvas):
+        """ Procedura pro vykresleni hraci plochy.
+
+        Args:
+            canvas (Object): DOM reprezentace hraci plochy.
+        """
         width = canvas.width
         height = canvas.height
         ctx = canvas.getContext("2d")
@@ -18,7 +23,18 @@ class Board:
             for y in range(self._boardSize):
                 if self._gameState[x][y].value == self._boardSize**2: self._gameState[x][y].drawSelf(x,y,boxSize,ctx, True)
                 else: self._gameState[x][y].drawSelf(x,y,boxSize,ctx)
+
     def keyHandler(self, posX: int, posY: int, canvas) -> bool:
+        """Procedura pro ovladani klavesnici
+
+        Args:
+            posX (int): Relativni posun po ose X (nabyva hodnot -1,0,1).
+            posY (int): Relativni posun po ose Y (nabyva hodnot -1,0,1).
+            canvas (Object): DOM reprezentace hraci plochy.
+
+        Returns:
+            bool: Uspesnost provedeni tahu, tzn. jeho legalita.
+        """
         for x in range(self._boardSize):
             for y in range(self._boardSize):
                 if self._gameState[x][y].value == self._boardSize**2:
@@ -28,6 +44,16 @@ class Board:
                         return True
         return False
     def clickHandler(self, positionX: int, positionY: int, canvas) -> bool:
+        """Procedura pro ovladani mysi
+
+        Args:
+            positionX (int): Posice na ose X kliknuti relativne k vykreslovacimu platnu.
+            positionY (int): Posice na ose X kliknuti relativne k vykreslovacimu platnu.
+            canvas (Object): DOM reprezentace hraci plochy.
+
+        Returns:
+            bool: Uspesnost provedeni tahu, tzn. jeho legalita.
+        """
         width = canvas.width
         height = canvas.height
         boxSize = height//self._boardSize
@@ -49,8 +75,13 @@ class Board:
                 self._gameState[x][y].value, self._gameState[x][y+1].value = self._gameState[x][y+1].value, self._gameState[x][y].value
                 return True
         return False
-    #True's even
+
     def getPermutationSign(self) -> bool:
+        """Spocita znamenko permutace daneho poctem cyklu sude delky.
+
+        Returns:
+            bool: Hodnota True znamena, ze je permutace suda.
+        """
         flat = [[self._gameState[x][y].value-1,False] for y in range(self._boardSize) for x in range(self._boardSize)]
         cycles = []
         posFix = 0
@@ -72,6 +103,7 @@ class Board:
         else: return countEvenCycles % 2 == 0
 
     def shuffleSelf(self):
+        """Zamichej hraci plochu tak, ze dana permutace je suda a volne misto zustane v pravem dolnim rohu."""
         while True:
             for _ in range(12):
                 while True:
@@ -85,6 +117,11 @@ class Board:
             if not self.isInWonState() and self.getPermutationSign(): break
 
     def isInWonState(self) -> bool:
+        """Dosahli jsme stavu vyhry?
+
+        Returns:
+            bool
+        """
         for x in range(self._boardSize):
             for y in range(self._boardSize):
                 if (x*self._boardSize+y+1 != self._gameState[y][x].value): return False
