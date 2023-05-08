@@ -18,7 +18,15 @@ class Board:
             for y in range(self._boardSize):
                 if self._gameState[x][y].value == self._boardSize**2: self._gameState[x][y].drawSelf(x,y,boxSize,ctx, True)
                 else: self._gameState[x][y].drawSelf(x,y,boxSize,ctx)
-
+    def keyHandler(self, posX: int, posY: int, canvas) -> bool:
+        for x in range(self._boardSize):
+            for y in range(self._boardSize):
+                if self._gameState[x][y].value == self._boardSize**2:
+                    if 0 <= x+posX < self._boardSize and 0 <= y+posY < self._boardSize:
+                        self._gameState[x][y].value = self._gameState[x+posX][y+posY].value
+                        self._gameState[x+posX][y+posY].value = self._boardSize**2
+                        return True
+        return False
     def clickHandler(self, positionX: int, positionY: int, canvas) -> bool:
         width = canvas.width
         height = canvas.height
